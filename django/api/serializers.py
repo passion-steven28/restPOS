@@ -13,7 +13,7 @@ class CategorySerializer(serializers.ModelSerializer):
         
 class OrderSerializer(serializers.ModelSerializer):
     # include items in the order
-    items = OrderItemSerializer(many=True)
+    # items = OrderItemSerializer(many=True)
     
     class Meta:
         model = Order
