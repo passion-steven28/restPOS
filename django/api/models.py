@@ -27,26 +27,27 @@ class Order(models.Model):
         CREDIT_CARD = 'credit_card'
         DEBIT_CARD = 'debit_card'
 
+    id = models.UUIDField(primary_key=True,blank=False,unique=True,default=models.UUIDField())
     payment = models.CharField(
         max_length=100, 
         choices=payment.choices,
         default=payment.CASH
         )
     discount = models.IntegerField()
-    products = models.ManyToManyField(Product, through='OrderItem')
+    products = models.ManyToManyField(to=Product, through='OrderItem')
     table = models.ForeignKey(Table, on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     
-    @property
-    def total_price(self):
-        # calculate total price including discount
-        total_price = 0
-        for item in self.products.all():
-            total_price += item.sub_price
-        return total_price - self.discount
+    # @property
+    # def total_price(self):
+    #     # calculate total price including discount
+    #     total_price = 0
+    #     for item in self.products.all():
+    #         total_price += item.sub_price
+    #     return total_price - self.discount
     
     def __str__(self):
-        return self.product.name
+        return self.id
     
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)

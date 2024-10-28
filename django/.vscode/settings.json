@@ -1,5 +1,7 @@
 {
     "cSpell.words": [
+        "authemail",
+        "authtoken",
         "orderitems",
         "userprofiles",
         "viewsets"
